@@ -1,19 +1,19 @@
 class Solution {
 public:
     vector<int> replaceElements(vector<int>& arr) {
-        for(int i=0; i<arr.size()-1; i++)
+        int right = arr.size()-1;
+        int elementMax = -1;
+        
+        for(int i=right; i>=0; i--)
         {
-            int max = arr[i+1];
-            for(int j=i+1; j<arr.size(); j++)
+            int temp = elementMax;
+            if(elementMax < arr[i])
             {
-                if(max < arr[j])
-                {
-                    max = arr[j];
-                }
+                elementMax = arr[i];
             }
-            arr[i] = max;
+            arr[i] = temp;
         }
-        arr[arr.size()-1] = -1;
+        arr[right] = -1;
         return arr;
     }
 };
