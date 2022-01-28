@@ -6,15 +6,15 @@ using namespace std;
 class Solution
 {
 private:
-    void subsetSums(vector<int>arr, int N, int weight, vector<int>& result, int left, int right)
+    void subsetSums(vector<int>arr, int N, int weight, vector<int>& result, int index)
     {
-        if(left > right)
+        if(index >= N)
         {
             result.push_back(weight);
             return;
         }
-        subsetSums(arr, N, weight+arr[left], result, left+1, right);
-        subsetSums(arr, N, weight, result, left+1, right);
+        subsetSums(arr, N, weight+arr[index], result, index+1);
+        subsetSums(arr, N, weight, result, index+1);
     }
 public:
     vector<int> subsetSums(vector<int> arr, int N)
@@ -22,7 +22,8 @@ public:
         // Write Your Code here
         vector<int> result;
         int weight = 0;
-        subsetSums(arr, N, weight, result, 0, N-1);
+        int index = 0;
+        subsetSums(arr, N, weight, result, index);
         return result;
     }
 };
