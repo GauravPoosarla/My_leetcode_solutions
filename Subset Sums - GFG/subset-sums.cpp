@@ -8,7 +8,7 @@ class Solution
 private:
     void subsetSums(vector<int>arr, int N, int weight, vector<int>& result, int index)
     {
-        if(index >= N)
+        if(index == N)
         {
             result.push_back(weight);
             return;
