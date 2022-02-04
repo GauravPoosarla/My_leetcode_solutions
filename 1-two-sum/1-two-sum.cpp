@@ -19,6 +19,8 @@ public:
         // return result;
         
         // Efficient Code:
+        // TC: O(n)
+        // SC: O(n)
         unordered_map<int,int> mp;
         vector<int> result;
         
@@ -30,7 +32,9 @@ public:
                 result.push_back(mp[target-nums[i]]);
             }
             else
+            {
                 mp[nums[i]] = i;
+            }
         }
         return result;
     }
