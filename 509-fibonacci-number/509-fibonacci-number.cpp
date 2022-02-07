@@ -1,20 +1,25 @@
 class Solution {
 public:
     int fib(int n) {
-        if(n<=1)
+        // BruteForce
+        // TC: O(n)
+        // SC: O(1)
+        
+        int first = 0;
+        int second = 1;
+        
+        if(n<2)
         {
             return n;
         }
-        int a = 0;
-        int b = 1;
         
-        int ans = 0;
-        for(int i=1; i<n; i++)
+        int sum=0;
+        for(int i=2; i<=n; i++)
         {
-            ans = a + b;
-            a = b;
-            b = ans;
+            sum = first+second;
+            first = second;
+            second = sum;
         }
-        return ans;
+        return second;
     }
 };
