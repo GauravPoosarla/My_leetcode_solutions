@@ -1,52 +1,66 @@
-// class Solution {
-// public:
-//     int largestRectangleArea(vector<int>& arr) {
-//         int res = 0;
-//         for(int i=0; i<heights.size(); i++)
-//         {
-//             int curr = heights[i];
-//             for(int j=i-1; j>=0; j--)
-//             {
-//                 if(heights[j] >= heights[i])
-//                 {
-//                     curr+=heights[i];
-//                 }
-//                 else
-//                 {
-//                     break;
-//                 }
-//             }
-//             for(int j=i+1; j<heights.size(); j++)
-//             {
-//                 if(heights[j] >= heights[i])
-//                 {
-//                     curr+=heights[i];
-//                 }
-//                 else
-//                 {
-//                     break;
-//                 }
-//             }
-//             res = max(res, curr);
-//         }
-//         return res;
-// };
-
 class Solution {
-public:
-    int largestRectangleArea(vector<int>& height) {
-        height.push_back(0);
-        int n = height.size(), area = 0;
-        stack<int> indexes;
-        for (int i = 0; i < n; i++) {
-            while (!indexes.empty() && height[indexes.top()] > height[i]) {
-                int h = height[indexes.top()]; indexes.pop();
-                int l = indexes.empty() ? -1 : indexes.top();
-                area = max(area, h * (i - l - 1));
+private:
+    vector<int> nextSmallerElement(vector<int> arr, int n)
+    {
+        stack<int> s;
+        s.push(-1);
+        vector<int> ans(n);
+
+        for(int i=n-1; i>=0; i--)
+        {
+            int curr = arr[i];
+            while(s.top() != -1 and arr[s.top()] >= curr)
+            {
+                s.pop();
             }
-            indexes.push(i);
+            ans[i] = s.top();
+            s.push(i);
         }
-        return area; 
+        return ans;
+    }
+    
+    vector<int> prevSmallerElement(vector<int> arr, int n)
+    {
+        stack<int> s;
+        s.push(-1);
+        vector<int> ans(n);
+
+        for(int i=0; i<n; i++)
+        {
+            int curr = arr[i];
+            while(s.top() != -1 and arr[s.top()] >= curr)
+            {
+                s.pop();
+            }
+            ans[i] = s.top();
+            s.push(i);
+        }
+        return ans;
+    }
+    
+public:
+    int largestRectangleArea(vector<int>& heights) {
+        int n = heights.size();
+        
+        vector<int> next(n);
+        
+        next = nextSmallerElement(heights, n);
+        
+        vector<int> prev(n);
+        prev = prevSmallerElement(heights, n);
+        int area = INT_MIN;
+        for(int i=0; i<n; i++)
+        {
+            int l = heights[i];
+            if(next[i] == -1)
+            {
+                next[i] = n;
+            }
+            int b = next[i] - prev[i] - 1;
+            
+            int newArea = l * b;
+            area = max(area, newArea);
+        }
+        return area;
     }
 };
-        
