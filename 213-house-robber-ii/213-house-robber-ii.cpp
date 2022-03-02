@@ -1,5 +1,20 @@
 class Solution {
 private:
+    int solveTabulation(vector<int> arr, vector<int> &dp)
+    {
+        dp[0] = arr[0];
+        int n = arr.size();
+        for(int i=1; i<arr.size(); i++)
+        {
+            int pick = arr[i];
+            if(i>1)
+                pick += dp[i-2];
+            int nonPick = 0 + dp[i-1];
+            
+            dp[i] = max(pick, nonPick);
+        }
+        return dp[n-1];
+    }
     int solve(int index, vector<int> arr, vector<int> &dp)
     {
         // pick and non pick adjacent elements
@@ -43,9 +58,11 @@ public:
                 temp2.push_back(nums[i]);
         }
         
-        int ans1 = solve(temp1.size()-1, temp1, dp1);
-        int ans2 = solve(temp2.size()-1, temp2, dp2);
+        // int ans1 = solve(temp1.size()-1, temp1, dp1);
+        // int ans2 = solve(temp2.size()-1, temp2, dp2);
         
+        int ans1 = solveTabulation(temp1, dp1);
+        int ans2 = solveTabulation(temp2, dp2);
         return max(ans1, ans2);
     }
 };
