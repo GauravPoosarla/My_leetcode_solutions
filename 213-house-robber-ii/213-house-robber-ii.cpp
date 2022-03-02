@@ -1,5 +1,26 @@
 class Solution {
 private:
+    int solveSpaceOptimized(vector<int>& arr)
+    {
+        int n = arr.size();
+        int prev = arr[0];
+        int prev2 =0;
+
+        for(int i=1; i<n; i++)
+        {
+            int pick = arr[i];
+            if(i>1)
+                pick += prev2;
+            int nonPick = 0 + prev;
+
+            int cur_i = max(pick, nonPick);
+            prev2 = prev;
+            prev= cur_i;
+
+        }
+        return prev;
+    }  
+    
     int solveTabulation(vector<int> arr, vector<int> &dp)
     {
         dp[0] = arr[0];
@@ -15,7 +36,8 @@ private:
         }
         return dp[n-1];
     }
-    int solve(int index, vector<int> arr, vector<int> &dp)
+    
+    int solveMemoization(int index, vector<int> arr, vector<int> &dp)
     {
         // pick and non pick adjacent elements
         if(index == 0)
@@ -32,13 +54,33 @@ private:
             return dp[index];
         }
         
-        int pick = arr[index] + solve(index-2, arr, dp);
-        int notPick = 0 + solve(index-1, arr, dp);
+        int pick = arr[index] + solveMemoization(index-2, arr, dp);
+        int notPick = 0 + solveMemoization(index-1, arr, dp);
         
         dp[index] = max(pick, notPick);
         return dp[index];
         
     }
+    
+    int solveRecursively(int index, vector<int> arr)
+    {
+        // pick and non pick adjacent elements
+        if(index == 0)
+        {
+            return arr[index];
+        }
+        if(index < 0)
+        {
+            return 0;
+        }
+        
+        int pick = arr[index] + solveRecursively(index-2, arr);
+        int notPick = 0 + solveRecursively(index-1, arr);
+        
+        return max(pick, notPick);
+        
+    }
+    
 public:
     int rob(vector<int>& nums) {
         int n = nums.size();
@@ -57,12 +99,21 @@ public:
             if(i!=n-1)
                 temp2.push_back(nums[i]);
         }
+        // Recursion
+        // int ans1 = solveRecursively(temp1.size()-1, temp1);
+        // int ans2 = solveRecursively(temp2.size()-1, temp2);
         
-        // int ans1 = solve(temp1.size()-1, temp1, dp1);
-        // int ans2 = solve(temp2.size()-1, temp2, dp2);
+        // Top-Down
+        // int ans1 = solveMemoization(temp1.size()-1, temp1, dp1);
+        // int ans2 = solveMemoization(temp2.size()-1, temp2, dp2);
         
-        int ans1 = solveTabulation(temp1, dp1);
-        int ans2 = solveTabulation(temp2, dp2);
+        // Bottom-Up
+        // int ans1 = solveTabulation(temp1, dp1);
+        // int ans2 = solveTabulation(temp2, dp2);
+
+        // Space Optimized
+        int ans1 = solveSpaceOptimized(temp1);
+        int ans2 = solveSpaceOptimized(temp2);
         return max(ans1, ans2);
     }
 };
