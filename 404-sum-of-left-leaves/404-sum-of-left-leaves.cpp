@@ -11,21 +11,12 @@
  */
 class Solution {
 public:
-    TreeNode* temp=NULL;
-    int sum=0;
     int sumOfLeftLeaves(TreeNode* root) {
-        if (root == NULL) return 0;
-        sumOfLeftLeaves(root -> left);
-        if(temp != NULL) {
-            if(root -> left == temp && temp -> left == NULL && temp -> right == NULL) {
-sum +=temp -> val;
-                
-            }
-            temp = root;
-        }else {
-            temp = root;
-            }
-        sumOfLeftLeaves(root -> right);
-        return sum;
+        return sumOfLeftLeavesUtil(root, false);
+    }
+    int sumOfLeftLeavesUtil(TreeNode* root, bool isLeft) {
+        if(!root) return 0;
+        if(!root -> left && !root -> right) return isLeft ? root -> val : 0;
+        return sumOfLeftLeavesUtil(root -> left, true) + sumOfLeftLeavesUtil(root -> right, false);
     }
 };
