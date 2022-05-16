@@ -13,8 +13,8 @@ public:
             {
                 if(matrix[i][j] == 0)
                 {
-                    dummy1[i] = 0;
-                    dummy2[j] = 0;
+                    dummy1[i] = 1;
+                    dummy2[j] = 1;
                     
                 }
             }
@@ -24,7 +24,7 @@ public:
         {
             for(int j=0; j<cols; j++)
             {
-                if(dummy1[i] == 0 || dummy2[j] == 0)
+                if(dummy1[i] == 1 || dummy2[j] == 1)
                 {
                     matrix[i][j] = 0;
                 }
