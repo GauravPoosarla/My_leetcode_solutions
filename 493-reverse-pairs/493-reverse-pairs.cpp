@@ -12,7 +12,7 @@ private:
             }
             total += (j - (mid+1));
         }
-        vector < int > t;
+        vector<int> t;
         int left = low, right = mid + 1;
 
         while (left <= mid && right <= high) 
