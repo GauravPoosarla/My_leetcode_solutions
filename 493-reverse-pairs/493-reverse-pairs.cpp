@@ -12,36 +12,36 @@ private:
             }
             total += (j - (mid+1));
         }
-          vector < int > t;
-          int left = low, right = mid + 1;
+        vector < int > t;
+        int left = low, right = mid + 1;
 
-          while (left <= mid && right <= high) 
-          {
+        while (left <= mid && right <= high) 
+        {
 
             if (nums[left] <= nums[right]) 
             {
-              t.push_back(nums[left++]);
+                t.push_back(nums[left++]);
             } 
             else 
             {
-              t.push_back(nums[right++]);
+                t.push_back(nums[right++]);
             }
-          }
+        }
 
-          while (left <= mid) 
-          {
+        while (left <= mid) 
+        {
             t.push_back(nums[left++]);
-          }
-          while (right <= high) 
-          {
+        }
+        while (right <= high) 
+        {
             t.push_back(nums[right++]);
-          }
+        }
 
-          for (int i = low; i <= high; i++) 
-          {
+        for (int i = low; i <= high; i++) 
+        {
             nums[i] = t[i - low];
-          }
-          return total;
+        }
+        return total;
     }
     int mergeSort(vector<int> &nums, int low, int high)
     {
