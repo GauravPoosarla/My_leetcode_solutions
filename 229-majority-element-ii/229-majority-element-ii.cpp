@@ -33,9 +33,7 @@ public:
         for(i=0; i<sz; i++)
         {
             if(nums[i] == num1)
-            {
                 count1++;
-            }
             else if(nums[i] == num2)
                 count2++;
         }
