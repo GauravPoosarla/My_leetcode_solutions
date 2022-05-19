@@ -14,6 +14,10 @@ public:
                     break;
                 }
             }
+            if(result.size() == 2)
+            {
+                break;
+            }
         }
         return result;
     }
