@@ -4,6 +4,7 @@ public:
         vector<vector<int>> result;
         if(nums.empty())
             return result;
+        
         int n = nums.size();
         
         sort(nums.begin(), nums.end());
@@ -24,6 +25,7 @@ public:
                         end--;
                     else
                     {
+                        // condition satisfied therefore pushing it into the result vector
                         vector<int> quadruple;
                         quadruple.push_back(nums[i]);
                         quadruple.push_back(nums[j]);
