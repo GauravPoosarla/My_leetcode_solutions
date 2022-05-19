@@ -31,12 +31,16 @@ public:
                     sort(triplet.begin(), triplet.end());
                     res.push_back(triplet);
                     
+                    // skipping duplicates for second number
                     while(start < end and nums[start] == triplet[1])
                         start++;
+                    
+                    // skipping duplicates for third number
                     while(start < end and nums[end] == triplet[2])
                         end--;
                 }
             }
+            // skipping duplicates for first number
             while(i+1 < n and nums[i] == nums[i+1])
                 i++;
         }
