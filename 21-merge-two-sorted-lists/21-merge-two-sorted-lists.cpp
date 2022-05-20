@@ -10,36 +10,29 @@
  */
 class Solution {
 public:
-    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-        ListNode* dummy = new ListNode(0);
-        ListNode* tail = dummy;
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        if(l1 == NULL)
+            return l2;
+        if(l2 == NULL)
+            return l1;
         
-        while(list1 and list2)
+        if(l1->val > l2->val)
+            swap(l1, l2);
+        
+        ListNode* resultHead = l1;
+        
+        while(l1 and l2)
         {
-            if(list1->val < list2->val)
+            ListNode* temp = NULL;
+            while(l1 and l1->val <= l2->val)
             {
-                tail->next = list1;
-                list1 = list1->next;
+                temp = l1;
+                l1 = l1->next;
             }
-            else if(list1->val >= list2->val)
-            {
-                tail->next = list2;
-                list2 = list2->next;
-            }
-            tail = tail->next;
+            
+            temp->next = l2;
+            swap(l1, l2);
         }
-        while(list1)
-        {
-            tail->next = list1;
-            list1 = list1->next;
-            tail = tail->next;
-        }
-        while(list2)
-        {
-            tail->next = list2;
-            list2 = list2->next;
-            tail = tail->next;
-        }
-        return dummy->next;
+        return resultHead;
     }
 };
