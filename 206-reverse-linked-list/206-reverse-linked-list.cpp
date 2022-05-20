@@ -15,10 +15,19 @@ public:
         {
             return head;
         }
+        ListNode* prev_p = NULL;
+        ListNode* curr_p = head;
+        ListNode* next_p;
         
-        ListNode* temp = reverseList(head->next);
-        head->next->next = head;
-        head->next = NULL;
-        return temp;
+        while(curr_p != NULL)
+        {
+            next_p = curr_p->next;
+            curr_p->next = prev_p;
+            
+            prev_p = curr_p;
+            curr_p = next_p;
+        }
+        head = prev_p;
+        return head;
     }
 };
