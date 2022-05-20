@@ -34,7 +34,11 @@ public:
         {
             temp = temp->next;
         }
+        ListNode* del = temp->next;
+        // cout << del->val;
         temp->next = temp->next->next;
+        
+        delete(del);
         return head;
     }
 };
