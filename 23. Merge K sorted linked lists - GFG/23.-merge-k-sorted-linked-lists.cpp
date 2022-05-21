@@ -45,31 +45,31 @@ struct Node
 
 class Solution{
   private:
-  Node* merge(Node* l1, Node* l2)
+  Node* merge(Node* head1, Node* head2)
   {
-        if(l1 == NULL)
-            return l2;
-        if(l2 == NULL)
-            return l1;
+        if(head1 == NULL)
+            return head2;
+            
+        if(head2 == NULL)
+            return head1;
+            
+        if(head1->data > head2->data)
+            swap(head1, head2);
         
-        if(l1->data > l2->data)
-            swap(l1, l2);
+        Node* res = head1;
         
-        Node* resultHead = l1;
-        
-        while(l1 and l2)
+        while(head1 and head2)
         {
             Node* temp = NULL;
-            while(l1 and l1->data <= l2->data)
+            while(head1 and head1->data <= head2->data)
             {
-                temp = l1;
-                l1 = l1->next;
+                temp = head1;
+                head1 = head1->next;
             }
-            
-            temp->next = l2;
-            swap(l1, l2);
+            temp->next = head2;
+            swap(head1, head2);
         }
-        return resultHead;
+        return res;
   }
   public:
     //Function to merge K sorted linked list.
