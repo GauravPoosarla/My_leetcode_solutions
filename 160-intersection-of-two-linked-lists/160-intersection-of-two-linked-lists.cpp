@@ -7,22 +7,39 @@
  * };
  */
 class Solution {
+private:
+    int getDifference(ListNode* head1, ListNode* head2)
+    {
+        int len1 = 0, len2 = 0;
+        while(head1 || head2)
+        {
+            if(head1)
+            {
+                len1++;
+                head1 = head1->next;
+            }
+            if(head2)
+            {
+                len2++;
+                head2 = head2->next;
+            }
+        }
+        return len1-len2;
+    }
 public:
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-        unordered_set<ListNode*> sz;
-        ListNode* temp = headA;
-        while(temp)
-        {
-            sz.insert(temp);
-            temp = temp->next;
-        }
+        int difference = getDifference(headA, headB);
+        if(difference < 0)
+            while(difference++ != 0) headB = headB->next;
+        else
+            while(difference-- != 0) headA = headA->next;
         
-        temp = headB;
-        while(temp)
+        while(headA and headB)
         {
-            if(sz.find(temp) != sz.end())
-                return temp;
-            temp = temp->next;
+            if(headA == headB)
+                return headA;
+            headA = headA -> next;
+            headB = headB -> next;
         }
         return NULL;
     }
