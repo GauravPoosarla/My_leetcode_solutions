@@ -1,49 +1,45 @@
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
-        vector<vector<int>> res;
-        int n = nums.size();
-        
+        vector<vector<int>> result;
         sort(nums.begin(), nums.end());
-        for(int i=0; i<n; i++)
+        
+        for(int i=0; i<nums.size(); i++)
         {
-            int targetToFind = 0 - nums[i];
+            int target = 0 - nums[i];
             int start = i+1;
-            int end = n-1;
+            int end = nums.size()-1;
             
             while(start < end)
             {
-                int two_sum = nums[start] + nums[end];
-                if(two_sum < targetToFind)
+                if(nums[start] + nums[end] == target)
+                {
+                    vector<int> temp;
+                    temp.push_back(nums[i]);
+                    temp.push_back(nums[start]);
+                    temp.push_back(nums[end]);
+                    sort(temp.begin(), temp.end());
+                    result.push_back(temp);
+                    
+                    while(start < end and nums[start] == temp[1])
+                        start++;
+                    
+                    while(start < end and nums[end] == temp[2])
+                        end--;
+                }
+                else if(nums[start] + nums[end] < target)
                 {
                     start++;
                 }
-                else if(two_sum > targetToFind)
+                else
                 {
                     end--;
                 }
-                else
-                {
-                    vector<int> triplet;
-                    triplet.push_back(nums[i]);
-                    triplet.push_back(nums[start]);
-                    triplet.push_back(nums[end]);
-                    sort(triplet.begin(), triplet.end());
-                    res.push_back(triplet);
-                    
-                    // skipping duplicates for second number
-                    while(start < end and nums[start] == triplet[1])
-                        start++;
-                    
-                    // skipping duplicates for third number
-                    while(start < end and nums[end] == triplet[2])
-                        end--;
-                }
             }
-            // skipping duplicates for first number
-            while(i+1 < n and nums[i] == nums[i+1])
+            
+            while(i+1 < nums.size() and nums[i] == nums[i+1])
                 i++;
         }
-        return res;
+        return result;
     }
 };
