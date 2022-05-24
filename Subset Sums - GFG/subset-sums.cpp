@@ -6,24 +6,23 @@ using namespace std;
 class Solution
 {
 private:
-    void subsetSums(vector<int>arr, int N, int weight, vector<int>& result, int index)
+    void subsetSums(vector<int>& arr, vector<int>& result, int N, int index, int sum)
     {
         if(index == N)
         {
-            result.push_back(weight);
+            result.push_back(sum);
             return;
         }
-        subsetSums(arr, N, weight+arr[index], result, index+1);
-        subsetSums(arr, N, weight, result, index+1);
+        subsetSums(arr, result, N, index+1, sum+arr[index]);
+        subsetSums(arr, result, N, index+1, sum);
+        
     }
 public:
     vector<int> subsetSums(vector<int> arr, int N)
     {
         // Write Your Code here
         vector<int> result;
-        int weight = 0;
-        int index = 0;
-        subsetSums(arr, N, weight, result, index);
+        subsetSums(arr, result, N, 0, 0);
         return result;
     }
 };
