@@ -1,37 +1,39 @@
 class Solution {
-public:
-    bool isSafe(int row, int col, vector<string> board, int n) 
+private:
+    bool isSafe(int row, int col, vector<string>& board, int n)
     {
-        // check upper diagonal
-        int duprow = row;
-        int dupcol = col; 
+        int x = row;
+        int y = col;
         
-        while(row >= 0 && col >= 0) 
+        while(row >= 0 and col >= 0)
         {
-            if(board[row][col] == 'Q') return false;
+            if(board[row][col] == 'Q')
+                return false;
             row--;
             col--;
         }
         
+        row = x;
+        col = y;
         
-        col = dupcol; 
-        row = duprow;
-        while(col>=0) 
+        while(col >= 0)
         {
-            if(board[row][col] == 'Q') return false;
-            col--; 
+            if(board[row][col] == 'Q')
+                return false;
+            col--;
         }
-    
-        row = duprow;
-        col = dupcol; 
-        while(row<n && col>=0) 
+        
+        row = x;
+        col = y;
+        
+        while(row < n and col >= 0)
         {
-            if(board[row][col] == 'Q') return false;
+            if(board[row][col] == 'Q')
+                return false;
             row++;
-            col--; 
+            col--;
         }
-        
-        return true; 
+        return true;
     }
     void solve(int col, vector<string>& board, vector<vector<string>>& ans, int n)
     {
@@ -40,7 +42,7 @@ public:
             ans.push_back(board);
             return;
         }
-        for(int row =0; row<n; row++)
+        for(int row = 0; row < n; row++)
         {
             if(isSafe(row, col, board, n))
             {
@@ -50,15 +52,16 @@ public:
             }
         }
     }
+public:
     vector<vector<string>> solveNQueens(int n) {
         vector<vector<string>> ans;
         vector<string> board(n);
         string s(n, '.');
+        
         for(int i=0; i<n; i++)
         {
             board[i] = s;
         }
-        
         solve(0, board, ans, n);
         return ans;
     }
