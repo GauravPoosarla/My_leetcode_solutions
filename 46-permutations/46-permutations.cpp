@@ -1,28 +1,30 @@
 class Solution {
 private:
-    void permute(vector<int> nums, int index, vector<vector<int>>& result)
+    void permute(vector<int>& nums, vector<int>& ds, vector<vector<int>>& result, vector<int>& visited)
     {
-        // base case
-        if(index >= nums.size())
+        if(ds.size() == nums.size())
         {
-            result.push_back(nums);
+            result.push_back(ds);
             return;
         }
-        
-        // recursive call
-        for(int i=index; i<nums.size(); i++)
+        for(int i=0; i<nums.size(); i++)
         {
-            swap(nums[index], nums[i]);
-            permute(nums, index+1, result);
-            //bactrack
-            swap(nums[i], nums[index]);
+            if(visited[i] == -1)
+            {
+                ds.push_back(nums[i]);
+                visited[i] = 1;
+                permute(nums, ds, result, visited);
+                visited[i] = -1;
+                ds.pop_back();
+            }
         }
     }
 public:
     vector<vector<int>> permute(vector<int>& nums) {
         vector<vector<int>> result;
-        int index = 0;
-        permute(nums, index, result);
+        vector<int> ds;
+        vector<int> visited(nums.size(), -1);
+        permute(nums, ds, result, visited);
         return result;
     }
 };
