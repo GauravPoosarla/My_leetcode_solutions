@@ -1,27 +1,21 @@
 class Solution {
 public:
-    int get_peak_index(vector<int> &A, int left, int right)
-    {
-        int mid = left + (right - left) / 2;
-
-        if (left >= right)
-            return left;
-
-        if (A[mid] >= A[mid + 1])
+    int peakIndexInMountainArray(vector<int>& arr) {
+        int start = 0;
+        int end = arr.size()-1;
+        
+        while(start < end)
         {
-            return get_peak_index(A, left, mid);
+            int mid = (start + end)/2;
+            if(arr[mid] < arr[mid+1])
+            {
+                start = mid+1;
+            }
+            else if(arr[mid] > arr[mid+1])
+            {
+                end = mid;
+            }
         }
-        else
-        {
-            return get_peak_index(A, mid+1, right);
-        }
-
-    }
-
-    int peakIndexInMountainArray(vector<int> &A)
-    {
-
-        int ans = get_peak_index(A, 0, A.size() - 1);
-        return ans;
+        return end;
     }
 };
