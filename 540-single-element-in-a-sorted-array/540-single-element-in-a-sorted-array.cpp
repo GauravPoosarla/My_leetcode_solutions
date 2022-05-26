@@ -1,11 +1,15 @@
 class Solution {
 public:
     int singleNonDuplicate(vector<int>& nums) {
-        int xo = nums[0];
-        for(int i=1; i<nums.size(); i++)
+        int low = 0, high = nums.size()-2;
+        while(low <= high)
         {
-            xo ^= nums[i];
+            int mid = (low+high)/2;
+            if(nums[mid] == nums[mid^1])
+                low = mid+1;
+            else
+                high = mid-1;
         }
-        return xo;
+        return nums[low];
     }
 };
