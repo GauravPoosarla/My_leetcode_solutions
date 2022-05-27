@@ -2,19 +2,21 @@ class Solution {
 private:
     bool isCompatible(vector<int>& input, int distance, int balls)
     {
-        int cntBalls = 1;
-        int lastPlacedBasket = input[0];
+        int n = input.size();
+        int k = input[0];
+        balls--;
         
-        for(int i=1; i<input.size(); i++)
+        for(int i=1; i<n; i++)
         {
-            if(input[i] - lastPlacedBasket >= distance)
+            if(input[i]-k >= distance)
             {
-                cntBalls++;
-                lastPlacedBasket = input[i];
+                balls--;
+                if(balls == 0)
+                    return true;
+                
+                k = input[i];
             }
         }
-        if(cntBalls >= balls)
-            return true;
         return false;
     }
 public:
