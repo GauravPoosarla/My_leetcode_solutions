@@ -3,19 +3,23 @@ public:
     string reverseWords(string s) {
         reverse(s.begin(), s.end());
         int l = 0, r = 0, i = 0, n = s.size();
-        while (i < n) {
-            while (i < n && s[i] != ' ')
+        while(i < n)
+        {
+            while(i < n and s[i] != ' ')
                 s[r++] = s[i++];
-
-            if (l < r) { // if we can find a non-empty word then
-                reverse(s.begin() + l, s.begin() + r); // reverse current word
-                if (r == n) break;
-                s[r++] = ' '; // set empty space
+            
+            if(l < r)
+            {
+                reverse(s.begin() + l, s.begin() + r);
+                if(r == n)
+                    break;
+                s[r++] = ' ';
                 l = r;
             }
-            ++i; // now i == n or s[i] == ' ', so we skip that character!
+            i++;
         }
-        if (r > 0 && s[r-1] == ' ') --r; // skip last empty character if have
+        if(r > 0 and s[r-1] == ' ')
+            r--;
         s.resize(r);
         return s;
     }
