@@ -11,28 +11,17 @@
  */
 class Solution {
 private:
-    bool isSymmetricUtil(TreeNode* p, TreeNode* q)
+    bool isSymmetric(TreeNode* p, TreeNode* q)
     {
-        if(p == NULL and q == NULL)
-        {
-            return true;
-        }
-        else if (p == NULL or q == NULL)
-        {
-            return false;
-        }
-        else if (p->val != q->val)
-        {
-            return false;
-        }
-        return isSymmetricUtil(p->left,q->right) && isSymmetricUtil(p->right,q->left);;
+        if(p == NULL or q == NULL)
+            return p == q;
+        return ((p->val == q->val) and (isSymmetric(p->left, q->right)) and (isSymmetric(p->right, q->left)));
     }
 public:
     bool isSymmetric(TreeNode* root) {
         if(root == NULL)
-        {
             return true;
-        }
-        return isSymmetricUtil(root->left, root->right);
+        bool ans = isSymmetric(root->left, root->right);
+        return ans;
     }
 };
