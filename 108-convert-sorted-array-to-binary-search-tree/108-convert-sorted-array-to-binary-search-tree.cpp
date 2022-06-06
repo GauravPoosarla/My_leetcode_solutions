@@ -12,23 +12,16 @@
 class Solution {
 public:
     TreeNode* sortedArrayToBST(vector<int>& nums) {
-        if(nums.size() == 0)
-        {
-            return NULL;
+        return helper(nums, 0, nums.size()-1);
+    }
+    TreeNode* helper(vector<int>& nums, int low,int high){
+        if(low<=high){
+            int mid = low + (high-low)/2;
+            TreeNode* root = new TreeNode(nums[mid]);
+            root->left = helper(nums, low, mid-1);
+            root->right = helper(nums, mid+1, high);
+            return root;
         }
-        if(nums.size() == 1)
-        {
-            return new TreeNode(nums[0]);
-        }
-        
-        int middle = nums.size()/2;
-        TreeNode* root = new TreeNode(nums[middle]);
-        
-        vector<int> leftSubTree(nums.begin(), nums.begin()+middle);
-        vector<int> rightSubTree(nums.begin()+middle+1, nums.end());
-        
-        root->left = sortedArrayToBST(leftSubTree);
-        root->right = sortedArrayToBST(rightSubTree);
-        return root;
+        return NULL;
     }
 };
