@@ -20,25 +20,15 @@ class Solution {
 public:
     Node* connect(Node* root) {
         if(root == NULL)
-            return root;
-        
-        queue<Node*> q;
-        q.push(root);
-        
-        while(!q.empty())
+            return NULL;
+        Node* L = root->left, *R = root->right, *N = root->next;
+        if(L)
         {
-            int size = q.size();
-            for(int i=0; i<size; i++)
-            {
-                auto node = q.front();
-                q.pop();
-                if(i < size-1)
-                    node->next = q.front();
-                if(node->left)
-                    q.push(node->left);
-                if(node->right)
-                    q.push(node->right);
-            }
+            L->next = R;
+            if(N)
+                R->next = N->left;
+            connect(L);
+            connect(R);
         }
         return root;
     }
