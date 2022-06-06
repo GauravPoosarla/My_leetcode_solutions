@@ -19,17 +19,22 @@ public:
 class Solution {
 public:
     Node* connect(Node* root) {
-        if(root == NULL)
-            return NULL;
-        Node* L = root->left, *R = root->right, *N = root->next;
-        if(L)
+        Node* head = root;
+        while(root)
         {
-            L->next = R;
-            if(N)
-                R->next = N->left;
-            connect(L);
-            connect(R);
+            for(auto curr=root; curr; curr=curr->next)
+            {
+                if(curr->left)
+                {
+                    curr->left->next = curr->right;
+                    if(curr->next)
+                        curr->right->next = curr->next->left;
+                }
+                else
+                    break;
+            }
+            root = root->left;
         }
-        return root;
+        return head;
     }
 };
