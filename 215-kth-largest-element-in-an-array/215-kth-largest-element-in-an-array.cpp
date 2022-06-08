@@ -9,13 +9,9 @@ public:
         
         for(int i=k; i<nums.size(); i++)
         {
-            if(pq.top() > nums[i])
-                continue;
-            else
-            {
+            pq.push(nums[i]);
+            if(pq.size() > k)
                 pq.pop();
-                pq.push(nums[i]);
-            }
         }
         return pq.top();            
     }
