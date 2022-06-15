@@ -2,7 +2,7 @@ class Solution {
 private:
     int cherryPickup(int i1, int j1, int j2, int rows, int cols, vector<vector<int>>& grid, vector<vector<vector<int>>>& dp)
     {
-        if(j1 < 0 or j1 >= cols or j2 < 0 or j2 >= cols) // out of bound conditions
+        if(j1 < 0 or j1 >= cols or j2 < 0 or j2 >= cols) // out of bound condition
             return -1e8;
         
         if(dp[i1][j1][j2] != -1)
@@ -20,21 +20,22 @@ private:
         
         
         int maxi = -1e8; // maintaining a maximum variable
-        for(int dj1 = -1; dj1 <= +1; dj1++)
+        
+        for(int dj1 = -1; dj1 <= +1; dj1++) // possible directions are {-1, 0, +1}
         {
-            for(int dj2 = -1; dj2 <= +1; dj2++)
+            for(int dj2 = -1; dj2 <= +1; dj2++) // possible directions are {-1, 0, +1}
             {
                 int value = 0;
-                if(j1 == j2)
+                if(j1 == j2) // if both of them reach the same cell
                     value = grid[i1][j1];
                 else
                     value = grid[i1][j1] + grid[i1][j2];
                 
-                value += cherryPickup(i1+1, j1+dj1, j2+dj2, rows, cols, grid, dp);
-                maxi = max(maxi, value);
+                value += cherryPickup(i1+1, j1+dj1, j2+dj2, rows, cols, grid, dp); // calling the recursive function 
+                maxi = max(maxi, value); // updating the maximum value
             }
         }
-        return dp[i1][j1][j2] = maxi;
+        return dp[i1][j1][j2] = maxi; // storing the maximum value and returning
     }
 public:
     int cherryPickup(vector<vector<int>>& grid) {
