@@ -44,10 +44,10 @@ public:
         {
             for(int j=0; j<cols; j++)
             {
-                if(board[i][j] != 'Y')
-                    board[i][j] = 'X';
                 if(board[i][j] == 'Y')
                     board[i][j] = 'O';
+                else
+                    board[i][j] = 'X';
             }
         }
     }
