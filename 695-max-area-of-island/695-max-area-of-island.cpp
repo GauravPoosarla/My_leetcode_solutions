@@ -1,39 +1,53 @@
 class Solution {
 private:
-    bool isValid(int i, int j, int rows, int cols, vector<vector<int>>& grid)
+    void bfs(int i, int j, int rows, int cols, vector<vector<int>>& grid, int& max_area)
     {
-        if(i >= 0 and i < rows and j >= 0 and j < cols and grid[i][j]==1)
-            return true;
-        return false;
-    }
-    
-    int markAdjacentLands(int i, int j, int rows, int cols, vector<vector<int>>& grid)
-    {
-        if(isValid(i, j, rows, cols, grid))
-        {
-            grid[i][j] = 0;
-        return 1 + markAdjacentLands(i+1, j, rows, cols, grid) + markAdjacentLands(i, j+1, rows, cols, grid) + markAdjacentLands(i-1, j, rows, cols, grid) + markAdjacentLands(i, j-1, rows, cols, grid);
-        }
+        int dx[4] = {0, 1, 0, -1};
+        int dy[4] = {1, 0, -1, 0};
         
-        return 0;
+        queue<pair<int, int>> q;
+        q.push({i, j});
+        int curr_area = 1;
+        
+        while(!q.empty())
+        {
+            max_area = max(max_area, curr_area++);
+            auto it = q.front();
+            q.pop();
+            
+            int currx = it.first;
+            int curry = it.second;
+            grid[currx][curry] = 0;
+            
+            for(int i=0; i<4; i++)
+            {
+                int nx = currx + dx[i];
+                int ny = curry + dy[i];
+                
+                if(nx >= 0 and ny >= 0 and nx < rows and ny < cols and grid[nx][ny] == 1)
+                {
+                    q.push({nx, ny});
+                    grid[nx][ny] = 0;
+                }
+            }
+        }
     }
 public:
     int maxAreaOfIsland(vector<vector<int>>& grid) {
         int rows = grid.size();
         int cols = grid[0].size();
         
-        int maxArea = 0;
+        int max_area = 0;
         for(int i=0; i<rows; i++)
         {
             for(int j=0; j<cols; j++)
             {
                 if(grid[i][j] == 1)
                 {
-                    int area = markAdjacentLands(i, j, rows, cols, grid);
-                    maxArea = max(area, maxArea);
+                    bfs(i, j, rows, cols, grid, max_area);
                 }
             }
         }
-        return maxArea;
+        return max_area;
     }
 };
