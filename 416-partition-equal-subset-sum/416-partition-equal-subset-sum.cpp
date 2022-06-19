@@ -1,35 +1,39 @@
 class Solution {
-private:
-    bool subsetSum(int index, vector<int>& nums, int target, vector<vector<int>>& dp)
-    {
-        if(target == 0)
-            return true;
-        if(index == 0)
-            return nums[0] == target;
-        
-        if(dp[index][target] != -1)
-            return dp[index][target];
-        
-        bool notPick = subsetSum(index-1, nums, target, dp);
-        
-        bool pick = false;
-        if(nums[index] <= target)
-            pick = subsetSum(index-1, nums, target-nums[index], dp);
-        
-        return dp[index][target] = pick or notPick;
-    }
 public:
-    bool canPartition(vector<int>& nums) {
-        int sum = 0;
-        for(int i=0; i<nums.size(); i++)
-        {
-            sum += nums[i];
+    bool canPartition(vector<int> &arr){
+        int totSum=0;
+    int n = arr.size();
+    for(int i=0; i<n;i++){
+        totSum+= arr[i];
+    }
+    
+    if (totSum%2==1) return false;
+    
+    else{
+        int k = totSum/2;
+        vector<vector<bool>> dp(n,vector<bool>(k+1,false));
+    
+        for(int i=0; i<n; i++){
+            dp[i][0] = true;
         }
-        if(sum % 2 == 1)
-            return false;
         
-        int target = sum/2;
-        vector<vector<int>> dp(nums.size(), vector<int>(target+1, -1));
-        return subsetSum(nums.size()-1, nums, target, dp);
+        if(arr[0]<=k)
+            dp[0][arr[0]] = true;
+        
+        for(int ind = 1; ind<n; ind++){
+            for(int target= 1; target<=k; target++){
+                
+                bool notTaken = dp[ind-1][target];
+        
+                bool taken = false;
+                    if(arr[ind]<=target)
+                        taken = dp[ind-1][target-arr[ind]];
+            
+                dp[ind][target]= notTaken||taken;
+            }
+        }
+        
+        return dp[n-1][k];
+    }
     }
 };
