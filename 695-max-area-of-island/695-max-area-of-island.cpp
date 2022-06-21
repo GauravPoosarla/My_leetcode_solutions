@@ -32,6 +32,7 @@ private:
             }
         }
     }
+    
 public:
     int maxAreaOfIsland(vector<vector<int>>& grid) {
         int rows = grid.size();
