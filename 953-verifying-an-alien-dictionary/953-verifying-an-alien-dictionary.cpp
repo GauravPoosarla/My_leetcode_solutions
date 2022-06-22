@@ -2,11 +2,12 @@ class Solution {
 private:
     bool checkOrder(string& a, string& b, unordered_map<char, int>& mp)
     {
-        int i = -1;
-        while(++i < a.size() and i < b.size())
+        int i = 0;
+        while(i < a.size() and i < b.size())
         {
             if(mp[a[i]] != mp[b[i]])
                 return mp[a[i]] < mp[b[i]];
+            i++;
         }
         return a.size() <= b.size();
     }
