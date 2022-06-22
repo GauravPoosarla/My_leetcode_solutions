@@ -1,13 +1,14 @@
 class Solution {
 public:
-    int hammingWeight(uint32_t n) 
-    {
-        int count = 0;
-        while(n)
-        {
-            n &= (n - 1);
-            count++;
+    int hammingWeight(uint32_t n) {
+        
+        int setBitCount = 0;
+        
+        while (n) { // equivalent to n != 0
+            n &= (n - 1); // to clear the right most set bit
+            ++setBitCount;
         }
-        return count;
+        
+        return setBitCount;
     }
 };
