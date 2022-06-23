@@ -1,24 +1,42 @@
-class Solution {
-public:
-    string longestPalindrome(string s) {
-        int palindromeStartIndex = 0, longestPalindromeLength = 1;
-        int sLength = s.size();
-        for(int i = 0; i< sLength; ++i) {
-            int right = i, left = i-1;
-            //skip same characters 
-            while(s[right] == s[i]) {
-                right++;
+class Solution
+{
+    private:
+        bool helper(int i, int j, string &s, vector<vector < int>> &dp, int &maxlen, int &start)
+        {
+            if (i > j) return true;
+            if (dp[i][j] != -1) return dp[i][j];
+            if (s[i] == s[j])
+            {
+                dp[i][j] = helper(i + 1, j - 1, s, dp, maxlen, start);
             }
-            while(left >= 0 && right < sLength && s[right] == s[left]) {
-                left--;
-                right++;
+            else
+            {
+                dp[i][j] = false;
             }
-            int palindromeLength = right - left - 1;
-            if(palindromeLength > longestPalindromeLength) {
-                longestPalindromeLength = palindromeLength;
-                palindromeStartIndex = left + 1;
-            } 
+            if (dp[i][j] == 1)
+            {
+                if (maxlen < j - i + 1)
+                {
+                    maxlen = j - i + 1;
+                    start = i;
+                }
+            }
+            return dp[i][j];
         }
-        return s.substr(palindromeStartIndex,longestPalindromeLength);
-    }
+    public:
+        string longestPalindrome(string s)
+        {
+            int n = s.size();
+            int start = 0, maxlen = 1;
+			
+            vector<vector < int>> dp(n, vector<int> (n, -1));
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = i; j < n; j++)
+                {
+                    helper(i, j, s, dp, maxlen, start);
+                }
+            }
+            return s.substr(start, maxlen);
+        }
 };
