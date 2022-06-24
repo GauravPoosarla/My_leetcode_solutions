@@ -1,42 +1,43 @@
 class Solution {
-private:
-    void dfs(int i, int j, int m, int n, int& res, vector<vector<int>>& grid1, vector<vector<int>>& grid2)
-    {
-        if(i < 0 or j < 0 or i >= m or j >= n)
-            return ;
-        if(grid2[i][j] == 0)
-            return;
-        if(grid1[i][j] == 0 and grid2[i][j] == 1)
-            res = 0;
-        
-        grid2[i][j] = 0;
-        
-        int dx[4] = {0, 1, 0, -1};
-        int dy[4] = {1, 0, -1, 0};
-        
-        for(int k=0; k<4; k++)
-        {
-            dfs(i+dx[k], j+dy[k], m, n, res, grid1, grid2);
-        }
-    }
 public:
-    int countSubIslands(vector<vector<int>>& grid1, vector<vector<int>>& grid2) {
-        int m = grid2.size();
-        int n = grid2[0].size();
-        
-        int ans = 0;
-        for(int i=0; i<m; i++)
-        {
-            for(int j=0; j<n; j++)
-            {
-                if(grid2[i][j] == 1)
-                {
-                    int res = 1;
-                    dfs(i, j, m, n, res, grid1, grid2);
-                    ans += res;
-                }
-            }
-        }
-        return ans;
-    }
+
+int countSubIslands(vector<vector<int>>& grid1, vector<vector<int>>& grid2) {
+	int n = grid1.size(),m=grid1[0].size();
+	vector<vector<int>> vis(n, vector<int>(m));
+	int res = 0;
+	for(int i=0;i<n;i++) {
+		for(int j=0;j<m;j++){
+			if(grid2[i][j] == 1 && vis[i][j]==0){
+				if(bfs(grid1,grid2,vis,i,j,n,m)) {
+					res++;
+				}
+			}
+		}
+	}
+	return res;
+}
+    bool bfs(vector<vector<int>>& grid1, vector<vector<int>>& grid2, vector<vector<int>>& vis, int i,int j,int n, int m) {
+	queue<pair<int, int>> q;
+	q.push({i,j});
+	vis[i][j] = 1;
+	bool res = true;
+	while(!q.empty()) {
+		int r = q.front().first, c = q.front().second;
+		if(grid1[r][c] == 0) res=false;
+		q.pop();
+		int dx[] = {0, 1, 0, -1};
+		int dy[] = {1, 0, -1, 0};
+
+		for(int i = 0; i < 4; i++) {
+			int newX = dx[i] + r;
+			int newY = dy[i] + c;
+
+			if(newX >= 0 && newX < n && newY >= 0 && newY < m && grid2[newX][newY] == 1) {
+				q.push({newX, newY});
+				grid2[newX][newY] = 0;
+			}
+		}
+	}   
+	return res;
+}
 };
