@@ -1,20 +1,21 @@
 class Solution {
-    bool f(int n, vector<int>& dp) {
+    bool f(int index, vector<int>& dp) {
         
-        if(n <= 1)
+        if(index <= 1)
             return false;
         
-        if(dp[n] != -1)
-            return dp[n];
-        for(int x=1; x<n; x++)
+        if(dp[index] != -1)
+            return dp[index];
+        
+        for(int x=1; x<index; x++)
         {
-            if(n % x == 0)
+            if(index % x == 0)
             {
-                if(f(n-x, dp) == false)
-                    return dp[n] = true;
+                if(f(index-x, dp) == false)
+                    return dp[index] = true;
             }
         }
-        return dp[n] = false;
+        return dp[index] = false;
     }
 public:
     bool divisorGame(int n) {
