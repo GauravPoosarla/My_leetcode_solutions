@@ -1,20 +1,16 @@
 class Solution {
-private:
-    int f(int index, vector<int>& dp)
-    {
-        if(index <= 2)
-            return index;
-        if(dp[index] != -1)
-            return dp[index];
-        
-        int one = f(index-1, dp);
-        int two = f(index-2, dp);
-        
-        return dp[index] = one + two;
-    }
 public:
     int climbStairs(int n) {
-        vector<int> dp(n+1, -1);
-        return f(n, dp);
+        vector<int> dp(n+1, 0);
+        for(int i=0; i<=1; i++)
+        {
+            dp[i] = 1;
+        }
+        
+        for(int i=2; i<=n; i++)
+        {
+            dp[i] = dp[i-1] + dp[i-2];
+        }
+        return dp[n];
     }
 };
