@@ -4,17 +4,13 @@ private:
     {
         if(index == nums.size())
         {
-            vector<int> temp;
-            for(auto s: ds)
-            {
-                temp.push_back(s);
-            }
-            result.push_back(temp);
+            result.push_back(ds);
             return ;
         }
         ds.push_back(nums[index]);
         subsets(nums, ds, result, index+1);
         ds.pop_back();
+        
         subsets(nums, ds, result, index+1);
     }
 public:
