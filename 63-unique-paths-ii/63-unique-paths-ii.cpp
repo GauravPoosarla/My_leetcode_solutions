@@ -12,13 +12,8 @@ public:
         {
             for(int j=0; j<n; j++)
             {
-                if(i == 0 and j == 0)
+                if((i == 0 and j == 0) or grid[i][j] == 1)
                     continue;
-                
-                if(grid[i][j] == 1)
-                {
-                    continue;
-                }
                 
                 int up = 0;
                 if(i > 0)
