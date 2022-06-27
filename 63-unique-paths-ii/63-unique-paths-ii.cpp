@@ -1,30 +1,26 @@
 class Solution {
+private:
+    int f(int i, int j, int m, int n, vector<vector<int>>& grid, vector<vector<int>>& dp)
+    {
+        if( i >= 0 and j >= 0 and grid[i][j] == 1)
+            return 0;
+        if(i == 0 and j == 0)
+            return 1;
+        if(i < 0 or j < 0 or i >= m or j >= n)
+            return 0;
+        if(dp[i][j] != -1)
+            return dp[i][j];
+        
+        int up = f(i-1, j, m, n, grid, dp);
+        int left = f(i, j-1, m, n, grid, dp);
+        
+        return dp[i][j] = up + left;
+    }
 public:
     int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
-        if(obstacleGrid[0][0] == 1) return 0;
-        
-        int m = obstacleGrid.size(), n = obstacleGrid[0].size();
-        vector<vector<int>> dp(m, vector<int>(n, 0));
-        
-        dp[0][0] = 1;
-        for(int i=0; i<m; i++)
-        {
-            for(int j=0; j<n; j++)
-            {   
-                if((obstacleGrid[i][j] == 1) or (i == 0 and j == 0 ))
-                {
-                    continue;
-                }
-                else
-                {
-                    int left, up;
-                    left = j > 0 ? dp[i][j-1] : 0;
-                    up = i > 0 ? dp[i-1][j] : 0;
-                    
-                    dp[i][j] = up + left;
-                }
-            }
-        }
-        return dp[m-1][n-1];
+        int m = obstacleGrid.size();
+        int n = obstacleGrid[0].size();
+        vector<vector<int>> dp(m, vector<int>(n, -1));
+        return f(m-1, n-1, m, n, obstacleGrid, dp);
     }
 };
