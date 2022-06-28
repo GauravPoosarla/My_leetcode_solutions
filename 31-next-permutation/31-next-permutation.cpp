@@ -1,6 +1,7 @@
 class Solution {
 public:
-    void nextPermutation(vector<int>& nums) {
+    void nextPermutation(vector<int>& nums) 
+    {
         int k, i;
         for(k=nums.size()-2; k>=0; k--)
         {
@@ -9,11 +10,13 @@ public:
                 break;
             }
         }
+        
         if(k < 0)
         {
+            // largest permutation
             reverse(nums.begin(), nums.end());
         }
-        else 
+        else
         {
             for(i=nums.size()-1; i>k; i--)
             {
@@ -22,9 +25,8 @@ public:
                     break;
                 }
             }
-            swap(nums[k], nums[i]);
-            reverse(nums.begin()+k+1, nums.end());
+        swap(nums[k], nums[i]);
+        reverse(nums.begin()+k+1, nums.end());
         }
     }
 };
-
