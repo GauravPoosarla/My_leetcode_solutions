@@ -1,5 +1,23 @@
 class Solution {
 private:
+    bool bipartiteDFS(int node, vector<vector<int>>& graph, vector<int>& color)
+    {
+        if(color[node] == -1)
+            color[node] = 1;
+        
+        for(auto it: graph[node])
+        {
+            if(color[it] == -1)
+            {
+                color[it] = 1 - color[node];
+                if(!bipartiteDFS(it, graph, color))
+                    return false;
+                else if(color[node] == color[it])
+                    return false;
+            }
+        }
+        return true;
+    }
     bool bipartiteBFS(int src, vector<vector<int>>& graph, vector<int>& color)
     {
         queue<int> q;
