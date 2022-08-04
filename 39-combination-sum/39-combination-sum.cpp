@@ -8,12 +8,12 @@ private:
             {
                 result.push_back(ds);
             }
-            return;
+            return ;
         }
         if(candidates[index] <= target)
         {
             ds.push_back(candidates[index]);
-            combinationSum(candidates, result, ds, target - candidates[index], index);
+            combinationSum(candidates, result, ds, target-candidates[index], index);
             ds.pop_back();
         }
         combinationSum(candidates, result, ds, target, index+1);
