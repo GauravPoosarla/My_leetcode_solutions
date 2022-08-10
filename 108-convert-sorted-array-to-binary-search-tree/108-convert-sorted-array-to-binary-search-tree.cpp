@@ -14,7 +14,7 @@ public:
     TreeNode* sortedArrayToBST(vector<int>& nums) {
         return helper(nums, 0, nums.size()-1);
     }
-    TreeNode* helper(vector<int>& nums, int low,int high){
+    TreeNode* helper(vector<int>& nums, int low, int high){
         if(low<=high){
             int mid = low + (high-low)/2;
             TreeNode* root = new TreeNode(nums[mid]);
