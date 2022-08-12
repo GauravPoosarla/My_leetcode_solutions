@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int maximumSwap(int num)
+    int maximumSwap(long long num)
     {
         string numString = to_string(num);
         int n = numString.length();
