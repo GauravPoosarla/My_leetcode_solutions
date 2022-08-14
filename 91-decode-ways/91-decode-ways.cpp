@@ -11,7 +11,7 @@ private:
             return dp[index];
         
         int res = f(index + 1, s, dp);
-        if(index < n-1 and (s[index] == '1' or (s[index] == '2' and s[index+1] <'7')))
+        if(index < n-1 and (s[index] == '1' or (s[index] == '2' and s[index+1] < '7')))
             res += f(index+2, s, dp);
         return dp[index] = res;
     }
