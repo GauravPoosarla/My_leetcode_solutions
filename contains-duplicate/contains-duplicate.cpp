@@ -1,18 +1,18 @@
 class Solution {
 public:
     bool containsDuplicate(vector<int>& nums) {
-        if(nums.size() == 0 || nums.size() == 1)
+        unordered_map<int, int> mp;
+        for(int i=0; i<nums.size(); i++)
         {
-            return false;
+            mp[nums[i]]++;
         }
-        sort(nums.begin(), nums.end());
-        for(int i=0; i<nums.size()-1; i++)
+        
+        for(auto m: mp)
         {
-            if(nums[i] == nums[i+1])
-            {
+            if(m.second > 1)
                 return true;
-            }
         }
         return false;
     }
+    
 };
